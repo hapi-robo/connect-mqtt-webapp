@@ -24,7 +24,7 @@ passport.use(
       clientID: keys.github.clientID,
       clientSecret: keys.github.clientSecret,
       callbackURL: "/auth/github/redirect",
-      proxy: true
+      proxy: true // this is needed for deploying to production on heroku (https://stackoverflow.com/a/59450847)
     },
     (accessToken, refreshToken, profile, cb) => {
       console.log(profile);
@@ -59,7 +59,7 @@ passport.use(
       clientID: keys.azure.clientID,
       clientSecret: keys.azure.clientSecret,
       callbackURL: "/auth/azure/redirect",
-      proxy: true
+      proxy: true // this is needed for deploying to production on heroku (https://stackoverflow.com/a/59450847)
     },
     (accessToken, refreshToken, params, profile, cb) => {
       console.log(params);
