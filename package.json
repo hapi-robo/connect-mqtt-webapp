@@ -9,7 +9,7 @@
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
-    "server": "nodemon app.js"
+    "devel": "nodemon app.js"
   },
   "author": "R. Oung",
   "license": "MIT",

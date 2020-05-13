@@ -82,59 +82,59 @@ app.get('/', (req, res) => {
   res.render('login', { user: req.user });
 });
 
-// // create server and websocket connection
-// const server = http.createServer(app);
+// create server and websocket connection
+const server = http.createServer(app);
 // // const server = https.createServer(ssl_options, app);
-// const io = socketio(server);
+const io = socketio(server);
 
-// // socket.io handlers
-// io.on('connection', socket => {
-//   const temi = new Temi(mqttClient);
+// socket.io handlers
+io.on('connection', socket => {
+  const temi = new Temi(mqttClient);
 
-//   console.log('Socket.IO connection registered...'); 
+  console.log('Socket.IO connection registered...'); 
   
-//   // disconnection event
-//   socket.on('disconnect', () => {
-//     console.log('Socket.IO connection de-registered...');
-//   });
+  // disconnection event
+  socket.on('disconnect', () => {
+    console.log('Socket.IO connection de-registered...');
+  });
 
-//   // gamepad event
-//   socket.on('gamepad', data => {
-//     const obj = JSON.parse(data);
+  // gamepad event
+  socket.on('gamepad', data => {
+    const obj = JSON.parse(data);
 
-//     // parse and forward to MQTT
-//     if ('translate' in obj) {
-//       // temi.translate(..., data.translate);
-//     }
+    // parse and forward to MQTT
+    if ('translate' in obj) {
+      // temi.translate(..., data.translate);
+    }
 
-//     if ('rotate' in obj) {
-//       // temi.rotate(..., data.rotate);
-//     }
+    if ('rotate' in obj) {
+      // temi.rotate(..., data.rotate);
+    }
 
-//     if ('tilt' in obj) {
-//       // temi.tilt(..., data.tilt);
-//     }
-//   });
+    if ('tilt' in obj) {
+      // temi.tilt(..., data.tilt);
+    }
+  });
 
-//   // keyboard event
-//   socket.on('keyboard', data => {
-//     console.log(data);
+  // keyboard event
+  socket.on('keyboard', data => {
+    console.log(data);
 
-//     // parse and forward to MQTT
-//     if ('rotate' in data) {
-//       temi.rotate(data.serial, data.rotate);
-//     }
+    // parse and forward to MQTT
+    if ('rotate' in data) {
+      temi.rotate(data.serial, data.rotate);
+    }
     
-//     if ('translate' in data) {
-//       temi.translate(data.serial, data.translate);
-//     }
+    if ('translate' in data) {
+      temi.translate(data.serial, data.translate);
+    }
 
-//     if ('tilt' in data) {
-//       temi.tiltBy(data.serial, data.tilt);
-//     }
-//   });
-// });
+    if ('tilt' in data) {
+      temi.tiltBy(data.serial, data.tilt);
+    }
+  });
+});
 
-// // start server
-// server.listen(port, () => console.log(`Server is listening on port ${port}`));
-app.listen(port, () => console.log(`Server is listening on port ${port}`));
+// start server
+server.listen(port, () => console.log(`Server is listening on port ${port}`));
+// app.listen(port, () => console.log(`Server is listening on port ${port}`));
