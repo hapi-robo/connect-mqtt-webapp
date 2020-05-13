@@ -17,7 +17,7 @@ module.exports = {
     cookieKey: process.env.COOKIE_KEY
   },
   mqtt: {
-    host: process.env.MQTT_HOST,
+    hostname: process.env.MQTT_HOSTNAME,
     username: process.env.MQTT_USERNAME,
     password: process.env.MQTT_PASSWORD
   }

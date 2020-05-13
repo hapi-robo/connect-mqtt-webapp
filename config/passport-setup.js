@@ -18,6 +18,8 @@ passport.deserializeUser((id, cb) => {
   });
 });
 
+// https://github.com
+// Settings > Developer settings
 passport.use(
   new GitHubStrategy(
     {
@@ -53,6 +55,7 @@ passport.use(
 );
 
 // https://portal.azure.com/
+// Home > App registration > Authentication
 passport.use(
   new AzureStrategy(
     {

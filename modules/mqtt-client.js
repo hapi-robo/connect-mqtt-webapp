@@ -6,7 +6,7 @@ if (process.env.NODE_ENV !== 'production') {
   client = mqtt.connect("mqtt://localhost");
 } else {
   const keys = require('../config/keys');
-  client = mqtt.connect(keys.mqtt.host, {
+  client = mqtt.connect(keys.mqtt.hostname, {
     username: keys.mqtt.username,
     password: keys.mqtt.password
   });
