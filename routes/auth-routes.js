@@ -35,12 +35,16 @@ router.get("/azure", passport.authenticate("azure_ad_oauth2"));
 
 // callback route for azure-oauth
 // hand control to passport to use code to grab profile info
-router.get(
-  "/azure/redirect",
-  passport.authenticate("azure_ad_oauth2", { failureRedirect: "/login" }),
-  (req, res) => {
-    res.redirect("/console");
-  }
-);
+// router.get(
+//   "/azure/redirect",
+//   passport.authenticate("azure_ad_oauth2", { failureRedirect: "/login" }),
+//   (req, res) => {
+//     res.redirect("/console");
+//   }
+// );
+
+router.get("/azure/redirect", (req, res) => {
+  res.send('You reached the callback URI');
+});
 
 module.exports = router;
