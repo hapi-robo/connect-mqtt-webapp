@@ -23,7 +23,8 @@ passport.use(
     {
       clientID: keys.github.clientID,
       clientSecret: keys.github.clientSecret,
-      callbackURL: "/auth/github/redirect"
+      callbackURL: "/auth/github/redirect",
+      proxy: true
     },
     (accessToken, refreshToken, profile, cb) => {
       console.log(profile);
@@ -57,7 +58,8 @@ passport.use(
     {
       clientID: keys.azure.clientID,
       clientSecret: keys.azure.clientSecret,
-      callbackURL: "/auth/azure/redirect"
+      callbackURL: "/auth/azure/redirect",
+      proxy: true
     },
     (accessToken, refreshToken, params, profile, cb) => {
       console.log(params);

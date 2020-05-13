@@ -41,6 +41,13 @@ const app = express();
 // setup template engine
 app.set('view engine', 'ejs');
 
+// set content security policy
+// ref: https://www.html5rocks.com/en/tutorials/security/content-security-policy/
+// app.use((req, res, next) => {
+//   res.setHeader("Content-Security-Policy", "script-src 'self' https://apis.google.com");
+//   return next;
+// });
+
 // serve static files
 app.use(express.static(path.join(__dirname, 'public')));
 
