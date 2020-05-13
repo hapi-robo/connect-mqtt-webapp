@@ -30,10 +30,10 @@ const Temi = require('./modules/temi');
 const port = process.env.PORT || 5000;
 
 // CA certificates
-const ssl_options = {
-  key: fs.readFileSync(path.join(__dirname, 'ssl', 'localhost.key')),
-  cert: fs.readFileSync(path.join(__dirname, 'ssl', 'localhost.crt')),
-};
+// const ssl_options = {
+//   key: fs.readFileSync(path.join(__dirname, 'ssl', 'localhost.key')),
+//   cert: fs.readFileSync(path.join(__dirname, 'ssl', 'localhost.crt')),
+// };
 
 // instantiate webapp
 const app = express();
