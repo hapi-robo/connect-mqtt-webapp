@@ -3,7 +3,7 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 const http = require('http'); // debug
-const https = require('https');
+// const https = require('https');
 const fs = require('fs');
 const express = require('express');
 const path = require('path');
@@ -30,6 +30,7 @@ const Temi = require('./modules/temi');
 const port = process.env.PORT || 5000;
 
 // CA certificates
+// note: this isn't needed with heroku because TLS provided by default
 // const ssl_options = {
 //   key: fs.readFileSync(path.join(__dirname, 'ssl', 'localhost.key')),
 //   cert: fs.readFileSync(path.join(__dirname, 'ssl', 'localhost.crt')),
@@ -136,5 +137,5 @@ io.on('connection', socket => {
 });
 
 // start server
-server.listen(port, () => console.log(`Server is listening on port ${port}`));
 // app.listen(port, () => console.log(`Server is listening on port ${port}`));
+server.listen(port, () => console.log(`Server is listening on port ${port}`));
