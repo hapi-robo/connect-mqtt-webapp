@@ -2,25 +2,21 @@ if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config();
 }
 
-const http = require('http'); // debug
+const http = require('http');
 // const https = require('https');
 const fs = require('fs');
 const express = require('express');
+const expressLayouts = require('express-ejs-layouts');
 const path = require('path');
 const cookieSession = require('cookie-session');
 const passport = require('passport');
 const mongoose = require('mongoose');
-const bodyParser = require('body-parser');
+const flash = require('connect-flash');
 const socketio = require('socket.io');
 
+// configurations
 const keys = require('./config/keys');
 const passportSetup = require('./config/passport-setup');
-
-// const apiRoutes = require('./routes/api-routes');
-const authRoutes = require('./routes/auth-routes');
-const commandRoutes = require('./routes/command-routes');
-const consoleRoutes = require('./routes/console-routes');
-const devicesRoutes = require('./routes/devices-routes');
 
 const mqttClient = require('./modules/mqtt-client');
 const Temi = require('./modules/temi');
@@ -40,7 +36,11 @@ const port = process.env.PORT || 5000;
 const app = express();
 
 // setup template engine
+app.use(expressLayouts);
 app.set('view engine', 'ejs');
+
+// body-parser middleware
+app.use(express.urlencoded({ extended: false }));
 
 // set content security policy
 // ref: https://www.html5rocks.com/en/tutorials/security/content-security-policy/
@@ -50,38 +50,32 @@ app.set('view engine', 'ejs');
 // });
 
 // serve static files
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, './public')));
 
 // set up session cookies
 app.use(cookieSession({
-    maxAge: 24 * 60 * 60 * 1000,
+    // maxAge: 24 * 60 * 60 * 1000,
     keys: [keys.session.cookieKey]
 }));
 
-// initialize passport and cookie session
+// passport middlware
 app.use(passport.initialize());
 app.use(passport.session());
 
-// body-parser middleware
-app.use(bodyParser.json());
 
 // connect to mongodb
 mongoose
   .connect(keys.mongodb.dbURI, {useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false})
-  .then(() => console.log('Connected to MongoDB...'))
+  .then(() => console.log(`[${new Date().toLocaleString()}] Connected to MongoDB...`))
   .catch(err => console.log(err));
 
 // set up routes
-// app.use('/api', apiRoutes);
-app.use('/auth', authRoutes);
-app.use('/command', commandRoutes);
-app.use('/console', consoleRoutes);
-app.use('/devices', devicesRoutes);
-
-// create home route
-app.get('/', (req, res) => {
-  res.render('login', { user: req.user });
-});
+app.use('/', require('./routes/index'));
+app.use('/auth', require('./routes/auth'));
+app.use('/command', require('./routes/command'));
+app.use('/dashboard', require('./routes/dashboard'));
+app.use('/devices', require('./routes/devices'));
+app.use('/register', require('./routes/register'));
 
 // create server and websocket connection
 const server = http.createServer(app);
@@ -92,11 +86,11 @@ const io = socketio(server);
 io.on('connection', socket => {
   const temi = new Temi(mqttClient);
 
-  console.log('Socket.IO connection registered...'); 
+  console.log(`[${new Date().toLocaleString()}] Socket.IO connection registered...`); 
   
   // disconnection event
   socket.on('disconnect', () => {
-    console.log('Socket.IO connection de-registered...');
+    console.log(`[${new Date().toLocaleString()}] Socket.IO connection de-registered...`);
   });
 
   // gamepad event

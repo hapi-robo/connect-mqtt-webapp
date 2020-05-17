@@ -29,7 +29,7 @@ function onStatusInfo(serial, payload) {
     device.update(data);
   }
 
-  // console.log(deviceListAll);
+  console.log(deviceListAll);
   // console.log(`List Length: ${deviceListAll.length}`);
 }
 

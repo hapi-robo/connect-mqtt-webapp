@@ -1,13 +1,47 @@
-/* Chat */
 .chat-container {
-	overflow: hidden;
+  overflow: hidden;
 }
 
 .chat-messages {
-	max-height: 400px;
-	overflow-y: scroll;
+  max-height: 400px;
+  overflow-y: scroll;
 }
 
 .chat-messages .message {
-	border-radius: 5px;
+  border-radius: 5px;
+}
+
+.microsoft-button {
+  display: flex;
+  flex-direction: row;
+  padding: 0px 2px 0px 0px;
+  background-color: rgb(255, 255, 255);
+  border: 1px solid #5e5e5e;
+  border-radius: 0px;
+  box-sizing: content-box;
+  cursor: pointer;
+}
+
+.microsoft-button-text {
+  -moz-box-flex: 1;
+  flex-grow: 1;
+  height: 40px;
+}
+
+.microsoft-text {
+  color: #5e5e5e;
+  font-size: 14px;
+  font-weight: bold;
+  line-height: 40px;
+  height: 40px;
+}
+
+.page-wrap {
+  min-height: 100%;
+  margin-bottom: -170px;
+}
+
+.gradient-primary {
+  background-image: linear-gradient(to bottom, #654a86, #534292);
+  background-color: #534292;
 }
