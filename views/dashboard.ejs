@@ -1,0 +1,56 @@
+<!-- Display when no devices available -->
+<div id="container-no-devices" class="container text-center" style="display:none">
+  <div class="row">
+    <div class="col mt-5">
+      <a class="btn btn-secondary" href="/devices" role="button">Add some devices</a>
+    </div>
+  </div>
+</div>
+
+<div class="m-2">
+  <div class="row">
+    <!-- Device List -->
+    <div class="col-2">
+      <div class="list-group" id="list-device"></div>
+    </div>
+    <!-- End of Device List -->
+
+    <!-- Device Information -->
+    <div class="col-10">
+      <div id="div-device-details" style="display:none">
+        <div class="row">
+          <div class="col-3">
+            <p><span class="font-weight-bold">Serial Number</span>&emsp;<span id="device-serial"></span></p>
+          </div>
+          <div class="col-3">
+            <p>
+              <span class="font-weight-bold">Status</span>&emsp;
+              <span id="device-status"></span>&emsp;
+              <span id="device-battery"></span>
+            </p>
+          </div>
+          <div class="col-6">
+            <div id="input-goto" class="input-group"></div>
+          </div> 
+        </div>
+
+        <div class="row mt-2">
+          <div class="col">
+            <button class="btn btn-secondary" type="button" id="btn-video" style="display:none"><i class="fas fa-video"></i> Video</button>
+          </div>
+        </div>
+
+        <!-- Video Container -->
+        <div class="row mt-2">
+          <div class="col">
+            <div id="div-video"></div>
+          </div>
+        </div>
+        <!-- End of Video Container -->
+
+      </div>
+    </div>
+    <!-- End of Device Information -->
+
+  </div>
+</div>
