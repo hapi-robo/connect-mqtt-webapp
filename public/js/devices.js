@@ -1,6 +1,3 @@
-const deviceNameInput = document.querySelector("#deviceName");
-const deviceSerialInput = document.querySelector("#deviceSerial");
-
 // display devices in a list
 function showDeviceList(list) {
   const deviceList = document.querySelector("#list-device");
@@ -37,35 +34,6 @@ async function getDevices() {
   showDeviceList(data);
 }
 
-// add device to database
-async function addDevice(e) {
-  e.preventDefault();
-
-  const device = {
-    name: e.target.elements.deviceName.value,
-    serial: e.target.elements.deviceSerial.value
-  };
-
-  const res = await fetch("/devices/add", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(device)
-  });
-
-  const data = await res.json();
-
-  if (!("exists" in data)) {
-    showDeviceList(data);
-
-    // clear input fields
-    deviceNameInput.value = "";
-    deviceSerialInput.value = "";
-  } else {
-    console.log("Device already exists");
-    // @TODO Show alert
-  }
-}
-
 // remove device from database
 async function deleteDevice(e) {
   const serial = e.target.offsetParent.id;
@@ -82,18 +50,11 @@ async function deleteDevice(e) {
 }
 
 // initialize device list
-function init() {
-  getDevices();
-
-  // clear inputs
-  deviceNameInput.value = "";
-  deviceSerialInput.value = "";
+async function init() {
+  const res = await fetch("/devices/get", { method: "GET" });
+  const data = await res.json();
+  showDeviceList(data);
 }
 
 // window event listeners
 window.onload = init();
-
-// document event listeners
-document
-  .querySelector("#form-add-device")
-  .addEventListener("submit", addDevice);

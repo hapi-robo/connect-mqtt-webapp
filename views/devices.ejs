@@ -1,21 +1,44 @@
 <master class="m-2">
   <div class="container">
 
-    <!-- Add Device -->
-    <form id="form-add-device">
+    <!-- Add Device (NEW) -->
+    <form action="/devices/add" method="POST">
       <div class="form-row align-items-center">
-        <div class="col-sm-5 my-2">
-          <label class="sr-only" for="inline-form-device-name">Name</label>
-          <input type="text" class="form-control" id="deviceName" placeholder="Device Name">
-        </div>
-        <div class="col-sm-5 my-2">
-          <label class="sr-only" for="inline-form-serial-number">Serial Number</label>
+        <div class="col">
           <div class="input-group">
-            <input type="text" class="form-control" id="deviceSerial" placeholder="Serial Number" minlength="11" maxlength="11" size="11">
+            <div class="input-group-prepend">
+              <span class="input-group-text"><i class="fas fa-user-tag"></i></span>
+            </div>
+            <input
+              type="text",
+              id="name" 
+              name="name" 
+              class="form-control" 
+              placeholder="Device name" 
+              required
+            />
           </div>
         </div>
-        <div class="col-auto my-2">
-          <button type="submit" class="btn btn-secondary">Add</button>
+        <div class="col">
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text"><i class="fas fa-qrcode"></i></span>
+            </div>
+            <input
+              type="tel"
+              id="serial" 
+              name="serial" 
+              class="form-control" 
+              placeholder="Serial number"
+              minlength="11" 
+              maxlength="11" 
+              size="11"
+              required
+            />
+          </div>
+        </div>
+        <div class="col-auto">
+          <button type="submit" class="btn btn-primary btn-block">Add</button>
         </div>
       </div>
     </form>
@@ -29,3 +52,6 @@
 
   </div>
 </master>
+
+<!-- Custom -->
+<script type="text/javascript" src="/js/devices.js"></script>

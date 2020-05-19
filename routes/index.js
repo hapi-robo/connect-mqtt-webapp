@@ -4,12 +4,25 @@ const router = require("express").Router();
 router.get("/", (req, res) => res.redirect("/dashboard"));
 
 // login page
-router.get("/login", (req, res) => res.render("login", { layout: "./layouts/index" }));
+router.get("/login", (req, res) =>
+  res.render("login", {
+    title: "| Login",
+    layout: "./layouts/index",
+  })
+);
 
 // logout page
 router.get("/logout", (req, res) => {
   req.logout();
   res.redirect("/");
 });
+
+// test page
+router.get("/test", (req, res) =>
+  res.render("test", {
+    title: "| Test",
+    layout: "./layouts/index",
+  })
+);
 
 module.exports = router;

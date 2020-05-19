@@ -7,6 +7,7 @@ const authCheck = require("../modules/auth");
 // @access  OAuth
 router.get("/", authCheck, (req, res) => {
   res.render("dashboard", { 
+  	title: "| Dashboard",
   	layout: "./layouts/dashboard",
   	user: req.user 
   });

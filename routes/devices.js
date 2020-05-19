@@ -12,8 +12,11 @@ const SERIAL_LENGTH = 11; // temi's serial number is 11-digits long
 // @access  OAuth
 router.get("/", authCheck, (req, res) => {
   res.render("devices", { 
+    title: "| Devices",
     layout: "./layouts/dashboard",
-    user: req.user 
+    user: req.user,
+    name: '',
+    serial: ''
   });
 });
 
@@ -33,35 +36,67 @@ router.get("/get", authCheck, (req, res) => {
 // @desc    Add device
 // @access  OAuth
 router.post("/add", authCheck, (req, res) => {
-  // check parameters
-  if (req.body.serial.length !== SERIAL_LENGTH) {
-    res.status(404).json({ err: "Invalid serial number" });
+  const userId = req.user.id;
+  const { name, serial } = req.body;
+  let errors = [];
+
+  // check required fields
+  if (!name || !serial) {
+    errors.push({ msg: "Please fill in all fields" });
   }
 
-  // construct new device
-  const newDevice = {
-    name: req.body.name,
-    serial: req.body.serial
-  };
+  // serial number length
+  if (!(serial.length === 11)) {
+    errors.push({ msg: "Serial number should be 11-digits long"});
+  }
 
-  // find and add new device
-  User.find({ _id: req.user.id, "devices.serial": req.body.serial })
-    .then(user => {
-      if (user === undefined || user.length === 0) {
-        console.log(`Adding device: ${req.body.serial}`);
-        User.updateOne({ _id: req.user.id }, { $push: { devices: newDevice } })
-          .then(() => {
-            User.findById(req.user.id)
-              .then(updatedUser => res.json(updatedUser.devices))
-              .catch(err => res.status(404).json({ err }));
-          })
-          .catch(err => res.status(404).json({ err }));
-      } else {
-        console.log(`Device already exists...`);
-        res.json({ exists: true });
-      }
-    })
-    .catch(err => res.status(404).json({ err }));
+  // show errors
+  if (errors.length > 0) {
+    res.render('devices', {
+      title: "| Devices",
+      layout: "./layouts/dashboard",
+      user: req.user,
+      errors: errors,
+      name: name,
+      serial: serial
+    });
+  } else {
+    // find and add new device
+    User.find({ _id: req.user.id, "devices.serial": serial })
+      .then(devices => {
+        console.log(devices);
+        if (typeof devices === 'undefined' || devices.length === 0) {
+          const newDevice = { name, serial };
+          console.log(`Adding device: `, newDevice);
+          User.updateOne({ _id: userId }, { $push: { devices: newDevice } })
+            .then(() => {
+              User.findById(userId)
+                .then(user => {
+                  res.render('devices', {
+                    title: "| Devices",
+                    layout: "./layouts/dashboard",
+                    user: req.user,
+                    name: '',
+                    serial: ''
+                  });
+                })
+                .catch(err => res.status(404).json({ err }));
+            })
+            .catch(err => res.status(404).json({ err }));
+        } else {
+          console.log(`Device already exists...`);
+          res.render('devices', {
+            title: "| Devices",
+            layout: "./layouts/dashboard",
+            user: req.user,
+            errors: errors,
+            name: name,
+            serial: serial
+          });
+        }
+      })
+      .catch(err => res.status(404).json({ err }));
+  }
 });
 
 // @route   DELETE devices/delete
