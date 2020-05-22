@@ -2,9 +2,12 @@ let videoHandle;
 
 // show video
 function openVideo() {
+  const serial = sessionStorage.getItem("serial");
+
   console.log("Starting Video Call...");
 
   const divVideo = document.querySelector("#div-video");
+  console.log(window);
 
   // reset video container
   divVideo.textContent = "";
@@ -12,8 +15,8 @@ function openVideo() {
   // https://github.com/jitsi/jitsi-meet/blob/master/config.js
   // https://github.com/jitsi/jitsi-meet/blob/master/interface_config.js
   const options = {
-    roomName: `temi-${sessionStorage.getItem("selectedSerial")}`,
-    height: window.innerHeight * 0.9,
+    roomName: `temi-${sessionStorage.getItem("serial")}`,
+    height: `${window.innerHeight - 200}px`,
     parentNode: divVideo,
     interfaceConfigOverwrite: {
       DEFAULT_BACKGROUND: "#ffffff",
@@ -46,8 +49,7 @@ function openVideo() {
   };
 
   videoHandle = new JitsiMeetExternalAPI("meet.jit.si", options);
-
-  console.log(videoHandle.getIFrame());
+  // console.log(videoHandle.getIFrame());
 }
 
 // @TODO Not yet used
@@ -60,8 +62,7 @@ function closeVideo(handle) {
 
 window.onresize = () => {
   if (videoHandle !== undefined) {
-    console.log(window.innerHeight * 0.6);
-    videoHandle.getIFrame().style.height = `${window.innerHeight * 0.6}px`;
+    videoHandle.getIFrame().style.height = `${window.innerHeight - 200}px`;
   }
 };
 

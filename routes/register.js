@@ -4,7 +4,10 @@ const bcrypt = require("bcryptjs");
 const User = require('../models/User');
 
 // register page
-router.get('/', (req, res) => res.render('register', { layout: 'layout' }));
+router.get('/', (req, res) => res.render('register', { 
+  title: "| Register",
+  layout: './layouts/index' 
+}));
 
 // register handle
 router.post('/', (req, res) => {

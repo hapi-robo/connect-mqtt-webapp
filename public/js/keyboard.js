@@ -2,7 +2,7 @@ const keyboardSocket = io();
 
 // https://keycode.info/
 function keyboardEvent(event) {
-  const serial = sessionStorage.getItem("selectedSerial");
+  const serial = sessionStorage.getItem("serial");
 
   switch (event.keyCode) {
     case 37: // ArrowLeft

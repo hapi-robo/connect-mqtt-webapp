@@ -23,45 +23,8 @@ class Device {
     this.update(obj);
   }
 
-  // check if parameters are identical
-  isEqual(obj) {
-    // identification
-    if (this.name !== obj.name) {
-      return false;
-    }
-    if (this.ip !== obj.ip) {
-      return false;
-    }
-
-    // state
-    if (this.state !== obj.state) {
-      return false;
-    }
-    if (this.batteryPercentage !== obj.battery_percentage) {
-      return false;
-    }
-
-    // navigation
-    if (this.destination !== obj.destination) {
-      return false;
-    }
-    if (!arraysEqual(this.waypointList, obj.waypoint_list)) {
-      return false;
-    }
-
-    return true;
-  }
-
   // update parameters
   update(obj) {
-    // identification
-    if (obj.name) {
-      this.name = obj.name;
-    }
-    if (obj.ip) {
-      this.ip = obj.ip;
-    }
-
     // state
     if (obj.state) {
       this.state = obj.state;
@@ -79,15 +42,13 @@ class Device {
     }
 
     // timestamp
-    this.date = Date.now();
+    if (obj.timestamp) {
+      this.ts = obj.timestamp;
+    }
   }
 
   // reset parameters
   reset() {
-    // identification
-    this.name = "Untitled";
-    this.ip = undefined;
-
     // state
     this.state = undefined;
     this.batteryPercentage = undefined;
@@ -96,7 +57,15 @@ class Device {
     this.destination = undefined;
     this.waypointList = [];
 
-    this.date = undefined;
+    this.ts = undefined;
+  }
+
+  get timestamp() {
+    return this.ts;
+  }
+
+  set timestamp(timestamp) {
+    this.ts = timestamp;
   }
 }
 

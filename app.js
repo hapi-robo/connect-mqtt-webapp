@@ -11,15 +11,12 @@ const path = require('path');
 const cookieSession = require('cookie-session');
 const passport = require('passport');
 const mongoose = require('mongoose');
-const flash = require('connect-flash');
-const socketio = require('socket.io');
+
+const socketio = require('./modules/socketio');
 
 // configurations
 const keys = require('./config/keys');
 const passportSetup = require('./config/passport-setup');
-
-const mqttClient = require('./modules/mqtt-client');
-const Temi = require('./modules/temi');
 
 
 // constants
@@ -77,61 +74,13 @@ app.use('/auth', require('./routes/auth'));
 app.use('/command', require('./routes/command'));
 app.use('/dashboard', require('./routes/dashboard'));
 app.use('/devices', require('./routes/devices'));
+app.use('/profile', require('./routes/profile'));
 app.use('/register', require('./routes/register'));
 
 // create server and websocket connection
 const server = http.createServer(app);
-// // const server = https.createServer(ssl_options, app);
-const io = socketio(server);
-
-// socket.io handlers
-io.on('connection', socket => {
-  const temi = new Temi(mqttClient);
-
-  console.log(`[${new Date().toLocaleString()}] Socket.IO connection registered...`); 
-  
-  // disconnection event
-  socket.on('disconnect', () => {
-    console.log(`[${new Date().toLocaleString()}] Socket.IO connection de-registered...`);
-  });
-
-  // gamepad event
-  socket.on('gamepad', data => {
-    const obj = JSON.parse(data);
-
-    // parse and forward to MQTT
-    if ('translate' in obj) {
-      // temi.translate(..., data.translate);
-    }
-
-    if ('rotate' in obj) {
-      // temi.rotate(..., data.rotate);
-    }
-
-    if ('tilt' in obj) {
-      // temi.tilt(..., data.tilt);
-    }
-  });
-
-  // keyboard event
-  socket.on('keyboard', data => {
-    console.log(data);
-
-    // parse and forward to MQTT
-    if ('rotate' in data) {
-      temi.rotate(data.serial, data.rotate);
-    }
-    
-    if ('translate' in data) {
-      temi.translate(data.serial, data.translate);
-    }
-
-    if ('tilt' in data) {
-      temi.tiltBy(data.serial, data.tilt);
-    }
-  });
-});
+// const server = https.createServer(ssl_options, app);
+socketio(server);
 
 // start server
-// app.listen(port, () => console.log(`Server is listening on port ${port}`));
 server.listen(port, () => console.log(`Server is listening on port ${port}`));

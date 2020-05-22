@@ -1,7 +1,7 @@
 const router = require("express").Router();
 
 // redirect index page to login
-router.get("/", (req, res) => res.redirect("/dashboard"));
+router.get("/", (req, res) => res.redirect("/devices"));
 
 // login page
 router.get("/login", (req, res) =>

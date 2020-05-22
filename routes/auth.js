@@ -4,7 +4,7 @@ const passport = require("passport");
 // authorize with local strategy
 router.post("/login", (req, res, next) => {
   passport.authenticate("local", {
-    successRedirect: "/dashboard",
+    successRedirect: "/devices",
     failureRedirect: "/"
   })(req, res, next);
 })
@@ -23,7 +23,7 @@ router.get(
   "/github/redirect",
   passport.authenticate("github", { failureRedirect: "/login" }),
   (req, res) => {
-    res.redirect("/dashboard");
+    res.redirect("/devices");
   }
 );
 
@@ -36,7 +36,7 @@ router.get(
   "/azure/redirect",
   passport.authenticate("azure_ad_oauth2", { failureRedirect: "/login" }),
   (req, res) => {
-    res.redirect("/dashboard");
+    res.redirect("/devices");
   }
 );
 

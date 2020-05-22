@@ -1,60 +1,54 @@
-<!-- Display when no devices available -->
-<div id="container-no-devices" class="container text-center" style="display:none">
-  <div class="row">
-    <div class="col mt-5">
-      <a class="btn btn-secondary" href="/devices" role="button">Add some devices</a>
-    </div>
+<div id="serial" style="display:none"><%= serial %></div>
+
+<div class="row m-2 align-items-center">
+
+  <div class="col-4 mx-auto">
+    <a href="/devices">Devices</a><span class="text-muted"> / <%= serial %> </span>
+  </div>
+
+  <div class="col-4 mx-auto">
+    <button class="btn btn-primary" type="button" id="btn-video"><i class="fas fa-video"></i></button>
+  </div>
+
+  <div class="col-4 mx-auto">
+    <div id="input-goto" class="input-group"></div>
+  </div>
+
+</div>
+
+<!-- Device Audio & Video -->
+<div class="row m-2" style="height: calc(100% - 200px)">
+  <!-- <div class="col" style="background-color: #123456"> -->
+  <div class="col">
+    <div id="div-video"></div>
   </div>
 </div>
 
-<div class="m-2">
-  <div class="row">
-    <!-- Device List -->
-    <div class="col-2">
-      <div class="list-group" id="list-device"></div>
-    </div>
-    <!-- End of Device List -->
-
-    <!-- Device Information -->
-    <div class="col-10">
-      <div id="div-device-details" style="display:none">
-        <div class="row">
-          <div class="col-3">
-            <p><span class="font-weight-bold">Serial Number</span>&emsp;<span id="device-serial"></span></p>
-          </div>
-          <div class="col-3">
-            <p>
-              <span class="font-weight-bold">Status</span>&emsp;
-              <span id="device-status"></span>&emsp;
-              <span id="device-battery"></span>
-            </p>
-          </div>
-          <div class="col-6">
-            <div id="input-goto" class="input-group"></div>
-          </div> 
-        </div>
-
-        <div class="row mt-2">
-          <div class="col">
-            <button class="btn btn-secondary" type="button" id="btn-video" style="display:none"><i class="fas fa-video"></i> Video</button>
-          </div>
-        </div>
-
-        <!-- Video Container -->
-        <div class="row mt-2">
-          <div class="col">
-            <div id="div-video"></div>
-          </div>
-        </div>
-        <!-- End of Video Container -->
-
+<!-- Command Line -->
+<div class="row m-2">
+  <div class="col">
+    <div class="input-group">
+      <div class="input-group-prepend">
+        <span class="input-group-text"><i class="fas fa-terminal"></i></span>
+      </div>
+      <input 
+        type="text" 
+        id="input-command"
+        name="command"
+        class="form-control" 
+        placeholder="Command" 
+        aria-label="Command"
+        autocomplete="off"
+      />
+      <div class="input-group-append">
+        <button id="btn-command" class="btn btn-primary"><i class="fas fa-paper-plane"></i></button>
       </div>
     </div>
-    <!-- End of Device Information -->
-
   </div>
 </div>
 
+<!-- Overlay -->
+<!-- <span id="device-battery"></span>  -->
 
 <!-- Jitsi-->
 <!-- https://github.com/jitsi/jitsi-meet/blob/master/doc/api.md-->
@@ -64,7 +58,7 @@
 <script src="/socket.io/socket.io.js"></script>
 
 <!-- Custom -->
-<script type="module" defer src="/js/console.js"></script>
+<script type="module" defer src="/js/dashboard.js"></script>
 <script type="text/javascript" src="/js/keyboard.js"></script>
 <script type="text/javascript" src="/js/gamepad.js"></script>
 <script type="text/javascript" src="/js/video.js"></script>

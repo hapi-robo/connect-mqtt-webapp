@@ -1,7 +1,7 @@
 const router = require("express").Router();
 
 const User = require("../models/User");
-const authCheck = require("../modules/auth");
+const checkAuth = require("../modules/auth");
 const deviceListAll = require("../modules/mqtt-message-parser");
 
 // constants
@@ -10,7 +10,7 @@ const SERIAL_LENGTH = 11; // temi's serial number is 11-digits long
 // @route   GET console/
 // @desc    Render device page
 // @access  OAuth
-router.get("/", authCheck, (req, res) => {
+router.get("/", checkAuth, (req, res) => {
   res.render("devices", { 
     title: "| Devices",
     layout: "./layouts/dashboard",
@@ -26,7 +26,7 @@ router.get("/", authCheck, (req, res) => {
 // @route   GET devices/get
 // @desc    Get all devices
 // @access  OAuth
-router.get("/get", authCheck, (req, res) => {
+router.get("/get", checkAuth, (req, res) => {
   User.findById(req.user.id)
     .then(user => res.json(user.devices))
     .catch(err => res.status(404).json({ err }));
@@ -35,7 +35,7 @@ router.get("/get", authCheck, (req, res) => {
 // @route   POST devices/add
 // @desc    Add device
 // @access  OAuth
-router.post("/add", authCheck, (req, res) => {
+router.post("/add", checkAuth, (req, res) => {
   const userId = req.user.id;
   const { name, serial } = req.body;
   let errors = [];
@@ -102,7 +102,7 @@ router.post("/add", authCheck, (req, res) => {
 // @route   DELETE devices/delete
 // @desc    Delete device
 // @access  OAuth
-router.delete("/delete", authCheck, (req, res) => {
+router.delete("/delete", checkAuth, (req, res) => {
   // check parameters
   if (req.query.serial.length !== SERIAL_LENGTH) {
     res.status(404).json({ err: "Invalid serial number" });
@@ -134,16 +134,37 @@ router.delete("/delete", authCheck, (req, res) => {
 });
 
 //-------------------------------------------------------
-// Device Real-Time Information
-// @TODO Use websockets
 
-// @route   GET devices/info
+// @route   GET devices/update
 // @desc    Get device information
 // @access  OAuth
-router.get("/info", authCheck, (req, res) => {
-  console.log("Get device real-time information");  
+router.get("/update", checkAuth, (req, res) => {
+  User.findById(req.user.id)
+    .then(user => {  
+      const data = [];
+      user.devices.forEach(userDev => {
+        const device = deviceListAll.find(dev => dev.serial === userDev.serial);
+        
+        // device is online
+        if (typeof device !== "undefined") {
+          data.push(device);
+        }
+      });
+
+      res.json(data);
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(404).json({ err })
+    });
+});
+
+// @route   GET devices/info?serial=<value>
+// @desc    Get device information
+// @access  OAuth
+router.get("/info", checkAuth, (req, res) => {
   const device = deviceListAll.find(dev => dev.serial === req.query.serial);
-  
+  console.log("hello")
   if (typeof device === "undefined") {
     res.json({ success: false });
   } else {

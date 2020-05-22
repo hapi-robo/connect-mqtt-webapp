@@ -1,7 +1,7 @@
 <master class="m-2">
   <div class="container">
 
-    <!-- Add Device (NEW) -->
+    <!-- Add Device Form -->
     <form action="/devices/add" method="POST">
       <div class="form-row align-items-center">
         <div class="col">
@@ -15,6 +15,7 @@
               name="name" 
               class="form-control" 
               placeholder="Device name" 
+              autocomplete="off"
               required
             />
           </div>
@@ -33,6 +34,7 @@
               minlength="11" 
               maxlength="11" 
               size="11"
+              autocomplete="off"
               required
             />
           </div>
@@ -44,13 +46,14 @@
     </form>
 
     <!-- Device List -->
-    <div class="row">
+    <div class="row m-5">
       <div class="col">
         <div id="list-device" class="list-group"></div>
       </div>
     </div>
 
   </div>
+
 </master>
 
 <!-- Custom -->

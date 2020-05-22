@@ -1,5 +1,4 @@
 // parses incoming MQTT messages
-
 const mqttClient = require("./mqtt-client");
 const Device = require("./device");
 
@@ -16,17 +15,19 @@ function onEventUser(serial, payload) {
 }
 
 function onStatusInfo(serial, payload) {
-  const device = deviceListAll.find(dev => dev.serial === serial);
   const data = JSON.parse(payload);
+  const device = deviceListAll.find(dev => dev.serial === serial);
 
   if (typeof device === "undefined") {
     // append to list
     console.log("Append device");
     deviceListAll.push(new Device(serial, data));
-  } else if (!device.isEqual(data)) {
+  } else if (device.timestamp !== data.timestamp) {
     // update parameters
-    console.log("Update device parameters");
+    console.log(`[${new Date().toLocaleString()}] Update device parameters`);
     device.update(data);
+  } else {
+    // do nothing
   }
 
   // console.log(deviceListAll);
