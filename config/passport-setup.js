@@ -61,7 +61,7 @@ passport.use(
     (accessToken, refreshToken, params, profile, cb) => {
       const waadProfile = jwt.decode(params.id_token);
       // console.log(params);
-      // console.log(waadProfile);
+      console.log(waadProfile);
 
       // check if user already exists in our db
       User.findOne({ azureId: waadProfile.sub })
@@ -79,6 +79,7 @@ passport.use(
               lastName: waadProfile.family_name,
               email: waadProfile.upn,
               azureId: waadProfile.sub
+              // @TODO: Add locale
             })
               .save()
               .then(newUser => {
@@ -116,6 +117,7 @@ passport.use(
             new User({
               username: profile.username,
               githubId: profile.id
+              // @TODO: Add locale
             })
               .save()
               .then(newUser => {

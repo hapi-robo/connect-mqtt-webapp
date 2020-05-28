@@ -1,60 +1,76 @@
-<master class="m-2">
-  <div class="container">
+<master>
+  <!-- Add Device Form -->
+  <div class="row m-2">
+    <div class="col">
 
-    <!-- Add Device Form -->
-    <form action="/devices/add" method="POST">
-      <div class="form-row align-items-center">
-        <div class="col">
-          <div class="input-group">
-            <div class="input-group-prepend">
-              <span class="input-group-text"><i class="fas fa-user-tag"></i></span>
+      <form action="/devices/add" method="POST">
+        <div class="form-row align-items-center">
+          <div class="col">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fas fa-user-tag"></i></span>
+              </div>
+              <input
+                type="text",
+                id="name" 
+                name="name" 
+                class="form-control" 
+                placeholder="<%= polyglot.t("devices.name")%>" 
+                autocomplete="off"
+                required
+              />
             </div>
-            <input
-              type="text",
-              id="name" 
-              name="name" 
-              class="form-control" 
-              placeholder="Device name" 
-              autocomplete="off"
-              required
-            />
+          </div>
+          <div class="col">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fas fa-barcode"></i></span>
+              </div>
+              <input
+                type="tel"
+                id="serial" 
+                name="serial" 
+                class="form-control" 
+                placeholder="<%= polyglot.t("devices.serial")%>"
+                minlength="11" 
+                maxlength="11" 
+                size="11"
+                autocomplete="off"
+                required
+              />
+            </div>
+          </div>
+          <div class="col">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text">Device</span>
+              </div>
+              <select class="form-control" id="type">
+                <option>temi</option>
+                <option>Raspberry Pi</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-auto">
+            <button type="submit" class="btn btn-primary btn-block"><%= polyglot.t("devices.add")%></button>
           </div>
         </div>
-        <div class="col">
-          <div class="input-group">
-            <div class="input-group-prepend">
-              <span class="input-group-text"><i class="fas fa-qrcode"></i></span>
-            </div>
-            <input
-              type="tel"
-              id="serial" 
-              name="serial" 
-              class="form-control" 
-              placeholder="Serial number"
-              minlength="11" 
-              maxlength="11" 
-              size="11"
-              autocomplete="off"
-              required
-            />
-          </div>
-        </div>
-        <div class="col-auto">
-          <button type="submit" class="btn btn-primary btn-block">Add</button>
-        </div>
-      </div>
-    </form>
+      </form>
 
-    <!-- Device List -->
-    <div class="row m-5">
-      <div class="col">
-        <div id="list-device" class="list-group"></div>
-      </div>
+    </div>    
+  </div>
+
+  <!-- Device List -->
+  <div class="row m-2">
+    <div class="col">
+      <div id="list-device" class="list-group"></div>
     </div>
-
   </div>
 
 </master>
+
+<!-- footer-->
+<%- include('./partials/footer') -%>
 
 <!-- Custom -->
 <script type="text/javascript" src="/js/devices.js"></script>

@@ -1,23 +1,34 @@
 <div id="serial" style="display:none"><%= serial %></div>
 
-<div class="row m-2 align-items-center">
+<!-- Toolbar -->
+<div class="row m-2">
+  <div class="col">
+    <div class="d-flex m-2">
+      <!-- Breadcrumbs -->
+      <div class="mr-auto p-2">
+        <a href="/devices"><%= polyglot.t("dashboard.devices")%></a><span class="text-muted"> / <%= serial %> </span>
+      </div>
 
-  <div class="col-4 mx-auto">
-    <a href="/devices">Devices</a><span class="text-muted"> / <%= serial %> </span>
+      <!-- Video -->
+      <div class="p-2">
+        <button class="btn btn-primary" type="button" id="btn-video"><i class="fas fa-video"></i></button>
+      </div>
+
+      <!-- Logs -->
+      <div class="p-2">
+        <button class="btn btn-primary" type="button" id="btn-logs"><i class="fas fa-file-alt"></i></button>
+      </div>
+
+      <!-- Go To Dropdown-->
+      <div class="p-2">
+        <div id="input-goto" class="input-group"></div>
+      </div>
+    </div>
   </div>
-
-  <div class="col-4 mx-auto">
-    <button class="btn btn-primary" type="button" id="btn-video"><i class="fas fa-video"></i></button>
-  </div>
-
-  <div class="col-4 mx-auto">
-    <div id="input-goto" class="input-group"></div>
-  </div>
-
 </div>
 
-<!-- Device Audio & Video -->
-<div class="row m-2" style="height: calc(100% - 200px)">
+<!-- Device Audio & Video Area -->
+<div class="row m-2" style="height: calc(100% - 220px)">
   <!-- <div class="col" style="background-color: #123456"> -->
   <div class="col">
     <div id="div-video"></div>
@@ -25,7 +36,7 @@
 </div>
 
 <!-- Command Line -->
-<div class="row m-2">
+<div class="row mx-2 my-1">
   <div class="col">
     <div class="input-group">
       <div class="input-group-prepend">
@@ -48,7 +59,7 @@
 </div>
 
 <!-- Overlay -->
-<!-- <span id="device-battery"></span>  -->
+<!-- <span id="device-battery">Battery</span>  -->
 
 <!-- Jitsi-->
 <!-- https://github.com/jitsi/jitsi-meet/blob/master/doc/api.md-->

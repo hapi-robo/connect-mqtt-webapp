@@ -1,12 +1,19 @@
 const router = require("express").Router();
 const bcrypt = require("bcryptjs");
+const Polyglot = require('node-polyglot');
 
 const User = require('../models/User');
 
+const localeEn = require("../locale/en");
+const localeJp = require("../locale/jp");
+
+let polyglot = new Polyglot(localeEn);
+
 // register page
 router.get('/', (req, res) => res.render('register', { 
-  title: "| Register",
-  layout: './layouts/index' 
+  title: `| ${polyglot.t("register.title")}`,
+  layout: './layouts/index',
+  polyglot: polyglot
 }));
 
 // register handle
@@ -37,7 +44,8 @@ router.post('/', (req, res) => {
       lastName,
       email,
       password,
-      password2
+      password2,
+      polyglot 
     });
   } else {
     // validation passed 
@@ -52,14 +60,15 @@ router.post('/', (req, res) => {
             lastName,
             email,
             password,
-            password2
+            password2,
+            polyglot
           });
         } else {
           const newUser = new User({
-            firstName,
-            lastName,
-            email,
-            password
+            lastName: lastName,
+            firstName: firstName,
+            email: email,
+            locale: polyglot.locale()
           });
 
           // hash password

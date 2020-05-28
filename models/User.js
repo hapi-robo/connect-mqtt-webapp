@@ -46,6 +46,10 @@ const UserSchema = new Schema({
     type: String,
     required: false
   },
+  locale: {
+    type: String,
+    required: false,
+  },
   devices: [DeviceSchema]
 });
 

@@ -1,8 +1,14 @@
 const router = require("express").Router();
+const Polyglot = require('node-polyglot');
 
 const User = require("../models/User");
 const checkAuth = require("../modules/auth");
 const deviceListAll = require("../modules/mqtt-message-parser");
+
+const localeEn = require("../locale/en");
+const localeJp = require("../locale/jp");
+
+var polyglot = new Polyglot(localeEn);
 
 // constants
 const SERIAL_LENGTH = 11; // temi's serial number is 11-digits long
@@ -12,11 +18,12 @@ const SERIAL_LENGTH = 11; // temi's serial number is 11-digits long
 // @access  OAuth
 router.get("/", checkAuth, (req, res) => {
   res.render("devices", { 
-    title: "| Devices",
+    title: `| ${polyglot.t("devices.title")}`,
     layout: "./layouts/dashboard",
     user: req.user,
     name: '',
-    serial: ''
+    serial: '',
+    polyglot: polyglot 
   });
 });
 
@@ -53,7 +60,7 @@ router.post("/add", checkAuth, (req, res) => {
   // show errors
   if (errors.length > 0) {
     res.render('devices', {
-      title: "| Devices",
+      title: `| ${polyglot.t("devices.title")}`,
       layout: "./layouts/dashboard",
       user: req.user,
       errors: errors,
@@ -73,11 +80,12 @@ router.post("/add", checkAuth, (req, res) => {
               User.findById(userId)
                 .then(user => {
                   res.render('devices', {
-                    title: "| Devices",
+                    title: `| ${polyglot.t("devices.title")}`,
                     layout: "./layouts/dashboard",
                     user: req.user,
                     name: '',
-                    serial: ''
+                    serial: '',
+                    polyglot: polyglot 
                   });
                 })
                 .catch(err => res.status(404).json({ err }));
@@ -86,12 +94,13 @@ router.post("/add", checkAuth, (req, res) => {
         } else {
           console.log(`Device already exists...`);
           res.render('devices', {
-            title: "| Devices",
+            title: `| ${polyglot.t("devices.title")}`,
             layout: "./layouts/dashboard",
             user: req.user,
             errors: errors,
             name: name,
-            serial: serial
+            serial: serial,
+            polyglot: polyglot 
           });
         }
       })

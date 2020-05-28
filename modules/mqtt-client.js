@@ -24,7 +24,7 @@ client.on("connect", () => {
 client.on("reconnect", () => console.log(`[${new Date().toLocaleString()}] Attempting to reconnect...`));
 client.on("close", () => console.log(`[${new Date().toLocaleString()}] Disconnected from MQTT broker`));
 client.on("error", err =>
-  console.log(`[${Date.now()}] Failed to connect to MQTT broker: ${err}`)
+  console.log(`[${new Date().toLocaleString()}] Failed to connect to MQTT broker: ${err}`)
 );
 
 module.exports = client;

@@ -9,7 +9,8 @@
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
-    "devel": "nodemon app.js -e ejs js"
+    "devel": "nodemon app.js -e ejs js",
+    "lint": "eslint *.js config/*.js models/*.js modules/*.js public/js/*.js routes/*.js"
   },
   "author": "R. Oung",
   "license": "MIT",
@@ -25,6 +26,7 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.9.10",
     "mqtt": "^4.0.0",
+    "node-polyglot": "^2.4.0",
     "passport": "^0.4.1",
     "passport-azure-ad-oauth2": "0.0.4",
     "passport-github": "^1.1.0",

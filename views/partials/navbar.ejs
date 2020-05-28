@@ -1,35 +1,32 @@
 <nav class="navbar navbar-expand-sm navbar-light bg-light">
-  <div class="navbar-collapse w-100 order-0">
-    <a class="navbar-brand" href="/">
-      <img src="/logo.svg" width="30" height="30" class="d-inline-block align-top" alt="">
-      Connect
-    </a>
-  </div>
-  <% if (user) { -%>
-  <div class="collapse navbar-collapse w-100 order-1">
-    <ul class="navbar-nav ml-auto">
-      <li class="nav-item active dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown">
-          <i class="fas fa-user"></i>
-        </a>
-        <div class="dropdown-menu dropdown-menu-right">
-          <!-- <div class="card" style="width: 18rem;"> -->
-            <!-- <div class="card-body"> -->
-            <div class="m-3">
-              <h5 class="card-title"><%= user.firstName %> <%= user.lastName %></h5>
-              <h6 class="card-subtitle mb-2 text-muted"><%= user.email %></h6>
-              <a href="/profile" class="btn btn-primary">Profile</a>
-            </div>
-            <!-- </div> -->
-          <!-- </div> -->
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="/devices">Devices</a>
-          <a class="dropdown-item disabled" href="#">Settings</a>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="/logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+  
+  <!-- Logo -->
+  <a class="navbar-brand" href="/">
+    <img src="/logo.svg" width="30" height="30" class="d-inline-block align-top" alt="" loading="lazy">
+    Connect
+  </a>
+
+  <!-- Menu -->
+  <ul class="navbar-nav ml-auto">
+    <li class="nav-item active dropdown">
+      <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown">
+        <i class="fas fa-user"></i>
+      </a>
+      <div class="dropdown-menu dropdown-menu-right">
+        <% if (typeof user !== 'undefined') { -%>
+        <div class="m-3 text-nowrap">
+          <h5><%= user.firstName %> <%= user.lastName %></h5>
+          <h6 class="text-muted"><%= user.email %></h6>
         </div>
-      </li>
-    </ul>
-  </div>
-  <% } -%>
+        <% } -%>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item" href="/profile"><%= polyglot.t("navbar.profile")%></a>
+        <a class="dropdown-item" href="/devices"><%= polyglot.t("navbar.devices")%></a>
+        <a class="dropdown-item disabled" href="#"><%= polyglot.t("navbar.settings")%></a>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item" href="/logout"><i class="fas fa-sign-out-alt"></i> <%= polyglot.t("navbar.logout")%></a>
+      </div>
+    </li>
+  </ul>
+
 </nav>
