@@ -1,6 +1,7 @@
 module.exports = {
   locale: "jp",
   phrases: {
+    "language": "日本語", 
     "login": {
       "greetings": "Log in to your account",
       "email": "メールアドレス",
