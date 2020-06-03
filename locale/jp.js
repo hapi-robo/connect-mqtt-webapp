@@ -3,6 +3,7 @@ module.exports = {
   phrases: {
     "language": "日本語", 
     "login": {
+      "title": "ログイン",
       "greetings": "アカウントにログイン",
       "email": "メールアドレス",
       "password": "パスワード",
