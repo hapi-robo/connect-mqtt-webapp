@@ -74,7 +74,7 @@
           </form>
         </div>
         <div class="card-footer">
-          <p class="lead"><%= polyglot.t("login.signup_msg")%> <a href="/register"><%= polyglot.t("login.signup")%></a></p>
+          <p class="lead"><%= polyglot.t("login.signup_msg")%> <a href="/register?locale=<%= polyglot.locale()%>"><%= polyglot.t("login.signup")%></a></p>
         </div>
       </div>
       

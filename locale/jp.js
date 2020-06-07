@@ -53,6 +53,10 @@ module.exports = {
       "register": "登録",
       "account_msg": "既存のアカウントをお持ちの場合",
       "login": "ログイン"
+    },
+    "settings": {
+      "title": "設定",
+      "save": "保存"
     }
   }
 };

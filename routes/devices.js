@@ -1,31 +1,27 @@
 const router = require("express").Router();
-const Polyglot = require('node-polyglot');
 
 const User = require("../models/User");
 const checkAuth = require("../modules/auth");
+const setLocale = require("../modules/locale");
 const deviceListAll = require("../modules/mqtt-message-parser");
-
-const localeEn = require("../locale/en");
-const localeJp = require("../locale/jp");
-
-var polyglot = new Polyglot(localeEn);
 
 // constants
 const SERIAL_LENGTH = 11; // temi's serial number is 11-digits long
 
-// @route   GET console/
+// @route   GET devices/
 // @desc    Render device page
 // @access  OAuth
-router.get("/", checkAuth, (req, res) => {
+router.get("/", checkAuth, setLocale, (req, res) =>
   res.render("devices", { 
-    title: `| ${polyglot.t("devices.title")}`,
+    title: `| ${req.polyglot.t("devices.title")}`,
     layout: "./layouts/dashboard",
     user: req.user,
     name: '',
     serial: '',
-    polyglot: polyglot 
-  });
-});
+    polyglot: req.polyglot,
+    route: "/devices"
+  })
+);
 
 //-------------------------------------------------------
 // Device Routes
@@ -42,7 +38,7 @@ router.get("/get", checkAuth, (req, res) => {
 // @route   POST devices/add
 // @desc    Add device
 // @access  OAuth
-router.post("/add", checkAuth, (req, res) => {
+router.post("/add", checkAuth, setLocale, (req, res) => {
   const userId = req.user.id;
   const { name, serial } = req.body;
   let errors = [];
@@ -60,7 +56,7 @@ router.post("/add", checkAuth, (req, res) => {
   // show errors
   if (errors.length > 0) {
     res.render('devices', {
-      title: `| ${polyglot.t("devices.title")}`,
+      title: `| ${req.polyglot.t("devices.title")}`,
       layout: "./layouts/dashboard",
       user: req.user,
       errors: errors,
@@ -80,12 +76,12 @@ router.post("/add", checkAuth, (req, res) => {
               User.findById(userId)
                 .then(user => {
                   res.render('devices', {
-                    title: `| ${polyglot.t("devices.title")}`,
+                    title: `| ${req.polyglot.t("devices.title")}`,
                     layout: "./layouts/dashboard",
                     user: req.user,
                     name: '',
                     serial: '',
-                    polyglot: polyglot 
+                    polyglot: req.polyglot 
                   });
                 })
                 .catch(err => res.status(404).json({ err }));
@@ -94,13 +90,13 @@ router.post("/add", checkAuth, (req, res) => {
         } else {
           console.log(`Device already exists...`);
           res.render('devices', {
-            title: `| ${polyglot.t("devices.title")}`,
+            title: `| ${req.polyglot.t("devices.title")}`,
             layout: "./layouts/dashboard",
             user: req.user,
             errors: errors,
             name: name,
             serial: serial,
-            polyglot: polyglot 
+            polyglot: req.polyglot 
           });
         }
       })

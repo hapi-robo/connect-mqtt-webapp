@@ -1,0 +1,31 @@
+<master class="m-2">
+  <div class="container">
+
+    <h1><%= polyglot.t("settings.title")%></h1>
+
+    <!-- Settings Form -->
+    <form action="/settings/save" method="POST">
+      <div class="form-group">
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <div class="input-group-text"><i class="fas fa-globe"></i></div>
+          </div>
+          <select name="language" class="form-control">
+            <% if (polyglot.locale() === "en") { -%>
+              <option selected>English</option>
+              <option>日本語</option>
+            <% } else { -%>
+              <option>English</option>
+              <option selected>日本語</option>              
+            <% } -%>
+          </select>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary btn-block">
+        <%= polyglot.t("settings.save")%>
+      </button>
+    </form>
+
+  </div>
+
+</master>

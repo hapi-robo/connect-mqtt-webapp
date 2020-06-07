@@ -11,6 +11,7 @@ const path = require('path');
 const cookieSession = require('cookie-session');
 const passport = require('passport');
 const mongoose = require('mongoose');
+const helmet = require('helmet');
 
 const socketio = require('./modules/socketio');
 
@@ -31,6 +32,9 @@ const port = process.env.PORT || 5000;
 
 // instantiate webapp
 const app = express();
+
+// set HTTP headers appropriately
+app.use(helmet());
 
 // setup template engine
 app.use(expressLayouts);
@@ -53,8 +57,14 @@ app.use(express.static(path.join(__dirname, './public')));
 
 // set up session cookies
 app.use(cookieSession({
-    // maxAge: 24 * 60 * 60 * 1000,
-    keys: [keys.session.cookieKey]
+  name: 'session',
+  keys: [keys.session.cookieKey],
+  maxAge: 1 * 60 * 60 * 1000,
+  cookie: {
+    secure: true,
+    httpOnly: true,
+    domain: 'herokuapp.com'
+  }
 }));
 
 // passport middlware
@@ -64,7 +74,11 @@ app.use(passport.session());
 
 // connect to mongodb
 mongoose
-  .connect(keys.mongodb.dbURI, {useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false})
+  .connect(keys.mongodb.dbURI, {
+  	useNewUrlParser: true, 
+  	useUnifiedTopology: true, 
+  	useFindAndModify: false
+  })
   .then(() => console.log(`[${new Date().toLocaleString()}] Connected to MongoDB...`))
   .catch(err => console.log(err));
 
@@ -76,6 +90,7 @@ app.use('/dashboard', require('./routes/dashboard'));
 app.use('/devices', require('./routes/devices'));
 app.use('/profile', require('./routes/profile'));
 app.use('/register', require('./routes/register'));
+app.use('/settings', require('./routes/settings'));
 
 // create server and websocket connection
 const server = http.createServer(app);

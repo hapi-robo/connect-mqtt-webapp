@@ -53,6 +53,10 @@ module.exports = {
       "register": "Register",
       "account_msg": "Already have an account?",
       "login": "Login"
+    },
+    "settings": {
+      "title": "Settings",
+      "save": "Save"
     }
   }
 };

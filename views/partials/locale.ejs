@@ -1,10 +1,34 @@
 <div class="btn-group dropup">
-  <button class="btn btn-sm btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+  <button id="btn-locale" class="btn btn-sm btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
     <i class="fas fa-globe"></i>
     <%= polyglot.t("language")%>
   </button>
   <div class="dropdown-menu">
-    <a class="dropdown-item" href="/locale/en">English</a>
-    <a class="dropdown-item" href="/locale/jp">日本語</a>
+    <a class="dropdown-item" href="<%= route %>?locale=en">English</a>
+    <a class="dropdown-item" href="<%= route %>?locale=jp">日本語</a>
   </div>
 </div>
+
+<script>
+  document.querySelector(".dropdown-menu").addEventListener("click", e => {
+    const locale = e.target.innerText;
+
+    console.log(e.target.innerText);
+
+    switch(locale) {
+      case "English":
+        console.log("Locale: EN");
+        localStorage.setItem("locale", "EN");
+        break;
+
+      case "日本語":
+        console.log("Locale: JP");
+        localStorage.setItem("locale", "JP");
+        break;
+
+      default:
+        break;
+    }
+
+  });
+</script>

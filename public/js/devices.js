@@ -83,6 +83,8 @@ async function init() {
   const res = await fetch("/devices/get", { method: "GET" });
   const data = await res.json();
   showDeviceList(data);
+
+  // immediately update devices
   await getDeviceUpdates();
 
   // poll for device updates

@@ -1,20 +1,23 @@
 const router = require("express").Router();
 const bcrypt = require("bcryptjs");
-const Polyglot = require('node-polyglot');
 
 const User = require('../models/User');
-
-const localeEn = require("../locale/en");
-const localeJp = require("../locale/jp");
-
-let polyglot = new Polyglot(localeEn);
+const setLocale = require("../modules/locale");
 
 // register page
-router.get('/', (req, res) => res.render('register', { 
-  title: `| ${polyglot.t("register.title")}`,
-  layout: './layouts/index',
-  polyglot: polyglot
-}));
+// @TODO: Temporary until security checks are in place
+router.get('/', setLocale, (req, res) => 
+  res.send("Talk to the admin")
+);
+
+// router.get('/', setLocale, (req, res) => 
+//   res.render('register', { 
+//     title: `| ${req.polyglot.t("register.title")}`,
+//     layout: './layouts/index',
+//     polyglot: req.polyglot,
+//     route: "/register"
+//   })
+// );
 
 // register handle
 router.post('/', (req, res) => {
@@ -78,9 +81,7 @@ router.post('/', (req, res) => {
               // set password to hashed password
               newUser.password = hash;
               newUser.save()
-                .then(user => {
-                  res.redirect('/users/login')
-                })
+                .then(user => res.redirect('/users/login'))
                 .catch(err => console.log(err));
           }));
         }
