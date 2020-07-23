@@ -5,13 +5,14 @@ const Temi = require('./temi');
 
 const temi = new Temi(mqttClient);
 
+const GAIN = 30;
 
 function onKeyboard(data) {
   console.log(data);
 
   // parse and forward to MQTT
   if ('rotate' in data) {
-    temi.rotate(data.serial, data.rotate);
+    temi.rotate(data.serial, GAIN * data.rotate);
   }
   
   if ('translate' in data) {
@@ -19,7 +20,7 @@ function onKeyboard(data) {
   }
 
   if ('tilt' in data) {
-    temi.tiltBy(data.serial, data.tilt);
+    temi.tiltBy(data.serial, GAIN * data.tilt);
   }
 }
 
