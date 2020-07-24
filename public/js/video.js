@@ -6,7 +6,7 @@ function openVideo() {
 
   console.log("Starting Video Call...");
 
-  const divVideo = document.querySelector("#div-video");
+  const divVideo = document.querySelector("#div-jitsi");
   console.log(window);
 
   // reset video container

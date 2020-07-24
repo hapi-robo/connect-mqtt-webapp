@@ -60,4 +60,5 @@ function keyboardEvent(event) {
   }
 }
 
+// document.querySelector("#div-video").addEventListener("keydown", keyboardEvent);
 document.addEventListener("keydown", keyboardEvent);

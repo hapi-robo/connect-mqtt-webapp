@@ -61,12 +61,27 @@ router.post("/", checkAuth, (req, res) => {
   res.json({ success: true, cmd: cmd, val: val });
 });
 
+
 // @route   POST command/goto
 // @desc    Send device to location
 // @access  OAuth
 router.post("/goto", checkAuth, (req, res) => {
   temi.goto(req.body.serial, req.body.waypoint);
+
   res.json({ success: true, waypoint: req.body.waypoint });
 });
 
+
+// @route   POST command/pan_tilt
+// @desc    Pan and tilt the device
+// @access  OAuth
+router.post("/pan_tilt", checkAuth, (req, res) => {
+  const HalfFovX = 35; // [deg]
+  const HalfFovY = 30; // [deg]
+
+  temi.rotate(req.body.serial, req.body.pan * HalfFovX);
+  temi.tilt(req.body.serial, req.body.tilt * HalfFovY);
+
+  res.json({ success: true, pan: req.body.pan, tilt: req.body.tilt })
+})
 module.exports = router;

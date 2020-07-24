@@ -9,6 +9,11 @@
         <a href="/devices"><%= polyglot.t("dashboard.devices")%></a><span class="text-muted"> / <%= serial %> </span>
       </div>
 
+      <!-- Stop -->
+      <div class="p-2">
+        <button class="btn btn-primary" type="button" id="btn-stop"><i class="fas fa-stop"></i></button>
+      </div>
+
       <!-- Video -->
       <div class="p-2">
         <button class="btn btn-primary" type="button" id="btn-video"><i class="fas fa-video"></i></button>
@@ -28,15 +33,15 @@
 </div>
 
 <!-- Device Audio & Video Area -->
-<div class="row m-2" style="height: calc(100% - 220px)">
-  <!-- <div class="col" style="background-color: #123456"> -->
-  <div class="col">
-    <div id="div-video"></div>
+<div class="row m-2" style="height: calc(100% - 200px)" id="div-video">
+  <div class="col" style="background-color: #123456">
+  <!-- <div class="col"> -->
+    <div id="div-jitsi"></div>
   </div>
 </div>
 
 <!-- Command Line -->
-<div class="row mx-2 my-1">
+<div class="row mx-2 my-2">
   <div class="col">
     <div class="input-group">
       <div class="input-group-prepend">
@@ -72,4 +77,5 @@
 <script type="module" defer src="/js/dashboard.js"></script>
 <script type="text/javascript" src="/js/keyboard.js"></script>
 <script type="text/javascript" src="/js/gamepad.js"></script>
+<script type="text/javascript" src="/js/mouse.js"></script>
 <script type="text/javascript" src="/js/video.js"></script>

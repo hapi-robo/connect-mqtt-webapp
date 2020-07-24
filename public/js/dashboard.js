@@ -102,6 +102,3 @@ window.onload = init();
 
 document.querySelector("#btn-command").addEventListener("click", command);
 document.addEventListener("keydown", keyboardEvent);
-
-
-
