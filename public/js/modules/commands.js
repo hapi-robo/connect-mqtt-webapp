@@ -17,6 +17,10 @@ async function command() {
 async function commandGoto() {
   const waypoint = document.querySelector("#select-goto").value;
 
+  // temporarily store value
+  // @TODO remove this once the robot arrives at the location
+  sessionStorage.setItem('goto', waypoint);
+
   const res = await fetch("/command/goto", {
     method: "POST",
     headers: { "Content-Type": "application/json" },

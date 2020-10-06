@@ -76,11 +76,13 @@ router.post("/goto", checkAuth, (req, res) => {
 // @desc    Pan and tilt the device
 // @access  OAuth
 router.post("/pan_tilt", checkAuth, (req, res) => {
-  const HalfFovX = 35; // [deg]
-  const HalfFovY = 30; // [deg]
+  const narrowHfov = 60; // [deg]
+  const narrowVfov = 48; // [deg]
+  const wideHfov = 95; // [deg]
+  const wideVfov = 60; // [deg]
 
-  temi.rotate(req.body.serial, req.body.pan * HalfFovX);
-  temi.tilt(req.body.serial, req.body.tilt * HalfFovY);
+  temi.rotate(req.body.serial, req.body.pan * wideHfov / 2);
+  temi.tilt(req.body.serial, req.body.tilt * wideVfov / 2);
 
   res.json({ success: true, pan: req.body.pan, tilt: req.body.tilt })
 })
